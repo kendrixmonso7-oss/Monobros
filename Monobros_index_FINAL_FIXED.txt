@@ -1,0 +1,902 @@
+<!doctype html>
+<!-- MONOBROS TRADINGS FINAL OPERATIONAL APP v1.0 -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Monobros Tradings — Supplier of Power Plus+ Products</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f6f8;color:#17202a}
+header{background:#f2c400;padding:16px;color:#111;position:sticky;top:0;z-index:5}
+header h1{margin:0;font-size:22px} header small{opacity:.75}
+nav{display:flex;gap:6px;overflow:auto;padding:8px;background:#111;color:#fff;position:sticky;top:68px;z-index:4}
+nav button{border:0;border-radius:20px;padding:9px 13px;background:#333;color:#fff;white-space:nowrap}
+main{padding:14px;max-width:900px;margin:auto}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.card{background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 8px #0001;margin-bottom:12px}
+.stat{font-size:24px;font-weight:bold}.muted{color:#68727d;font-size:13px}
+button,.primary{cursor:pointer}.primary{background:#111;color:#fff;border:0;border-radius:10px;padding:11px 14px;font-weight:bold}
+input,select{width:100%;padding:11px;border:1px solid #ccd2d8;border-radius:9px;margin:5px 0 10px;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:9px;border-bottom:1px solid #e5e7eb}
+.row{display:grid;grid-template-columns:1fr 90px 100px 40px;gap:6px;align-items:center}.total{font-size:20px;font-weight:bold;text-align:right}
+.badge{display:inline-block;padding:4px 8px;border-radius:12px;background:#e8f5e9;font-size:12px}
+.hidden{display:none}.danger{background:#b42318;color:#fff;border:0;border-radius:8px;padding:7px}
+@media(max-width:600px){.grid{grid-template-columns:1fr 1fr}.row{grid-template-columns:1fr 70px 85px 34px}table{font-size:12px}}
+@media print{nav,.no-print,header{display:none}body{background:#fff}.card{box-shadow:none}}
+
+.stage2-badge{display:inline-block;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:800;background:#eef6ff;color:#145da0;margin:4px 0}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.kpi{padding:14px;border:1px solid #e5e7eb;border-radius:12px;background:#fff}
+.kpi b{display:block;font-size:20px;margin-bottom:3px}
+.kpi span{font-size:12px;color:#667085}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px}
+.quick-grid button{min-height:46px}
+.alert{padding:11px 13px;border-radius:10px;margin:8px 0;font-size:13px}
+.alert-warning{background:#fff7e6;border:1px solid #ffd27a}
+.alert-danger{background:#fff0f0;border:1px solid #ffb3b3}
+.status-paid{font-weight:700}
+.status-credit{font-weight:700}
+.small{font-size:12px;color:#667085}
+.table-wrap{overflow:auto}
+.mobile-only-note{font-size:12px;color:#667085;margin-top:7px}
+
+/* ===== STAGE 3 CLOUD-READY UI ===== */
+.stage3-banner{padding:14px;border-radius:14px;border:1px solid #cfe3ff;background:#f5f9ff;margin:12px 0}
+.stage3-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.stage3-card{border:1px solid #e5e7eb;border-radius:12px;padding:14px;background:#fff}
+.stage3-card h4{margin:0 0 7px}
+.sync-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#888;margin-right:6px}
+.sync-dot.ready{background:#2e9d62}
+.sync-dot.offline{background:#d98a00}
+.role-pill{display:inline-block;border-radius:999px;padding:4px 8px;background:#eee;font-size:11px;font-weight:700}
+
+/* ===== STAGE 4 SECURE OPERATING LAYER ===== */
+.stage4-banner{padding:15px;border:1px solid #d8e6f5;border-radius:14px;background:#f7fbff;margin:12px 0}
+.stage4-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.stage4-card{border:1px solid #e5e7eb;border-radius:12px;padding:14px;background:#fff}
+.stage4-card h4{margin:0 0 6px}
+.stage4-code{font-family:monospace;font-size:11px;background:#f5f5f5;padding:10px;border-radius:8px;overflow:auto}
+.stage4-ok{background:#edf9f1;border:1px solid #b8dfc3;border-radius:10px;padding:11px}
+.stage4-warn{background:#fff8e8;border:1px solid #f0d58b;border-radius:10px;padding:11px}
+.login-preview{max-width:430px;margin:10px auto;padding:18px;border:1px solid #e5e7eb;border-radius:14px}
+
+/* ===== STAGE 5 DEPLOYMENT / BACKEND CONNECTOR ===== */
+.stage5-banner{padding:15px;border:1px solid #d9e8db;border-radius:14px;background:#f7fcf8;margin:12px 0}
+.stage5-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.stage5-card{border:1px solid #e5e7eb;border-radius:12px;padding:14px;background:#fff}
+.stage5-card h4{margin:0 0 6px}
+.stage5-status{font-weight:800}
+.stage5-input{width:100%;box-sizing:border-box;margin:5px 0}
+.stage5-code{font-family:monospace;font-size:11px;background:#f5f5f5;padding:12px;border-radius:8px;overflow:auto;white-space:pre-wrap}
+
+/* ===== STAGE 6 PRODUCTION DATABASE / MIGRATION ===== */
+.stage6-banner{padding:15px;border:1px solid #e2d8f5;border-radius:14px;background:#faf8ff;margin:12px 0}
+.stage6-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.stage6-card{border:1px solid #e5e7eb;border-radius:12px;padding:14px;background:#fff}
+.stage6-card h4{margin:0 0 6px}
+.stage6-step{display:flex;gap:10px;align-items:flex-start;margin:9px 0}
+.stage6-num{min-width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#eee;font-weight:800}
+
+/* ===== MONOBROS FINAL OPERATIONAL UI ===== */
+.final-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin-bottom:12px}.final-kpi .card{margin:0}.final-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:9px}.final-actions button{min-height:46px;border:0;border-radius:12px;background:#f2c400;color:#111;font-weight:800}.final-table{overflow:auto}.final-note{padding:11px;border-radius:10px;background:#f7f8fa;border:1px solid #e5e7eb;font-size:13px}.success{background:#eefbf3;border:1px solid #b8e4c7;padding:11px;border-radius:10px}.warning{background:#fff7e6;border:1px solid #ffd27a;padding:11px;border-radius:10px}.danger-note{background:#fff0f0;border:1px solid #ffb3b3;padding:11px;border-radius:10px}.final-status{display:flex;gap:8px;flex-wrap:wrap}.final-status span{padding:6px 10px;border-radius:999px;background:#eef6ff;font-size:12px;font-weight:700}
+#stage2,#stage3,#stage4,#stage5,#stage6{display:none!important}
+</style>
+
+<meta name="theme-color" content="#123b5d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Monobros">
+<link rel="manifest" href="manifest.json">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div id="cloudGate" style="position:fixed;inset:0;background:#f4f6f8;z-index:9999;overflow:auto;padding:18px">
+  <div style="max-width:520px;margin:25px auto;background:#fff;border-radius:18px;padding:22px;box-shadow:0 8px 30px #0002">
+    <h2 style="margin-top:0">MONOBROS TRADINGS</h2>
+    <p class="muted"><b>Supplier of Power Plus+ Products</b></p>
+    <div class="alert alert-warning">
+      <b>Cloud connection</b><br>
+      This is the Monobros Tradings operational cloud app.
+      Use only your Supabase <b>Publishable</b> key. Never enter a service-role or secret key here.
+    </div>
+    <label>Supabase Project URL</label>
+    <input id="cloudUrl" value="https://ifppxjauapplmuyqfsal.supabase.co" autocomplete="off">
+    <label>Supabase Publishable key</label>
+    <input id="cloudKey" type="password" placeholder="Paste your public/publishable key" autocomplete="off">
+    <button class="primary" style="width:100%;margin:7px 0" onclick="saveCloudConfig()">Save cloud configuration</button>
+    <hr>
+    <h3>Admin Login</h3>
+    <label>Email</label>
+    <input id="loginEmail" type="email" placeholder="Your admin email" autocomplete="username">
+    <label>Password</label>
+    <input id="loginPassword" type="password" placeholder="Your password" autocomplete="current-password">
+    <button class="primary" style="width:100%;margin:7px 0" onclick="cloudLogin()">Login to Monobros</button>
+    <button style="width:100%;padding:10px;border:1px solid #ccd2d8;border-radius:10px;background:#fff" onclick="cloudCheck()">Test cloud connection</button>
+    <p id="cloudMessage" class="small" style="margin-top:12px"></p>
+    <p class="small">Your password is sent only to Supabase Authentication. It is not stored by this page.</p>
+  </div>
+</div>
+<div id="cloudBar" style="position:fixed;right:10px;bottom:10px;z-index:1000;background:#111;color:#fff;border-radius:14px;padding:9px 11px;font-size:12px;display:none">
+  <span id="cloudStatusDot">●</span> <span id="cloudStatusText">Cloud offline</span>
+  <button onclick="cloudSyncNow()" style="margin-left:7px;border:0;border-radius:8px;padding:5px 8px">Sync</button>
+  <button onclick="cloudLogout()" style="margin-left:4px;border:0;border-radius:8px;padding:5px 8px">Logout</button>
+</div>
+
+<header><h1>MONOBROS TRADINGS</h1><small>Supplier of Power Plus+ Products — Business Management System</small></header>
+<nav>
+<button onclick="show('dash')">Dashboard</button><button onclick="show('sale')">New Sale</button>
+<button onclick="show('products')">Products</button><button onclick="show('customers')">Customers</button><button onclick="show('suppliers')">Suppliers</button>
+<button onclick="show('invoices')">Invoices</button><button onclick="show('payments')">Payments</button><button onclick="show('purchases')">Purchases</button><button onclick="show('expenses')">Expenses</button><button onclick="show('reports')">Reports</button><button onclick="show('settings')">Settings</button>
+</nav>
+<main>
+<section id="dash">
+<div class="grid">
+<div class="card"><div class="muted">Today's Sales</div><div class="stat" id="today">K0.00</div></div>
+<div class="card"><div class="muted">Invoices</div><div class="stat" id="invCount">0</div></div>
+<div class="card"><div class="muted">Products</div><div class="stat" id="prodCount">0</div></div>
+<div class="card"><div class="muted">Low Stock</div><div class="stat" id="lowStock">0</div></div>
+</div>
+<div class="card"><h3>System status</h3>
+<p><span class="badge">Core system: Ready</span></p>
+<p class="muted">ZRA Smart Invoice is <b>not activated</b> yet. The system is structured for an approved ZRA integration; credentials and submission secrets must stay server-side.</p></div>
+<div class="final-actions card">
+<button onclick="show('sale')">+ New Sale</button><button onclick="show('products')">Stock</button><button onclick="show('payments')">Receive Payment</button><button onclick="show('purchases')">Receive Stock</button><button onclick="show('reports')">View Reports</button><button onclick="show('settings')">Settings</button>
+</div>
+<div class="final-status"><span>Mobile ready</span><span>Cloud sync</span><span>Invoice printing</span><span>Stock control</span><span>ZRA ready</span></div>
+</section>
+
+<section id="sale" class="hidden">
+<div class="card"><h2>New Sale</h2>
+<label>Customer</label><select id="customer"></select>
+<div id="lines"></div>
+<button class="primary no-print" onclick="addLine()">+ Add product</button>
+<p class="total">Total: <span id="saleTotal">K0.00</span></p>
+<div class="grid"><select id="paymentStatus"><option>Paid</option><option>Part Paid</option><option>Credit</option></select><select id="paymentMethod"><option>Cash</option><option>Mobile Money</option><option>Bank</option><option>Card</option><option>Other</option></select></div><button class="primary no-print" onclick="completeSale()">Save & Create Invoice</button>
+</div>
+<div id="invoicePreview"></div>
+</section>
+
+<section id="products" class="hidden">
+<div class="card"><h2>Products & Stock</h2>
+<div class="grid"><input id="pn" placeholder="Product name"><input id="ps" placeholder="Size e.g. 5L">
+<input id="pp" type="number" placeholder="Selling price"><input id="pq" type="number" placeholder="Opening stock"></div>
+<button class="primary" onclick="addProduct()">Add Product</button>
+</div>
+<div class="card"><table><thead><tr><th>Product</th><th>Size</th><th>Price</th><th>Stock</th></tr></thead><tbody id="productTable"></tbody></table></div>
+</section>
+
+<section id="customers" class="hidden">
+<div class="card"><h2>Customers</h2>
+<div class="grid"><input id="cn" placeholder="Customer name"><input id="cp" placeholder="Phone"><input id="ct" placeholder="TPIN (optional)"><input id="ca" placeholder="Address"></div>
+<button class="primary" onclick="addCustomer()">Add Customer</button></div>
+<div class="card"><table><thead><tr><th>Name</th><th>Phone</th><th>TPIN</th></tr></thead><tbody id="customerTable"></tbody></table></div>
+</section>
+
+<section id="invoices" class="hidden">
+<div class="card"><h2>Invoices</h2><div id="invoiceTable"></div></div>
+</section>
+
+<section id="purchases" class="hidden"><div class="card"><h2>Purchases / Stock In</h2><p class="muted">Record stock received from suppliers. Quantity is added to stock automatically.</p><div class="grid"><input id="supplierName" placeholder="Supplier name"><select id="purchaseProduct"></select><input id="purchaseQty" type="number" min="1" placeholder="Quantity"><input id="purchaseCost" type="number" min="0" step="0.01" placeholder="Cost per unit (K)"></div><button class="primary" onclick="addPurchase()">Receive Stock</button></div><div class="card"><h3>Purchase History</h3><div id="purchaseTable"></div></div></section>
+<section id="expenses" class="hidden"><div class="card"><h2>Business Expenses</h2><div class="grid"><input id="expenseDescription" placeholder="Expense description"><select id="expenseCategory"><option>Transport</option><option>Packaging</option><option>Utilities</option><option>Wages</option><option>Rent</option><option>Marketing</option><option>Other</option></select><input id="expenseAmount" type="number" min="0" step="0.01" placeholder="Amount (K)"></div><button class="primary" onclick="addExpense()">Add Expense</button></div><div class="card"><h3>Expense History</h3><div id="expenseTable"></div></div></section>
+
+<section id="suppliers" class="hidden">
+<div class="card"><h2>Suppliers</h2><div class="grid"><input id="sn" placeholder="Supplier name"><input id="sp" placeholder="Phone"><input id="sa" placeholder="Address"></div><button class="primary" onclick="addSupplier()">Add Supplier</button></div>
+<div class="card"><div class="final-table"><table><thead><tr><th>Supplier</th><th>Phone</th><th>Address</th></tr></thead><tbody id="supplierTable"></tbody></table></div></div>
+</section>
+
+<section id="payments" class="hidden">
+<div class="card"><h2>Customer Payments</h2><p class="muted">Record money received against credit or part-paid invoices.</p><div class="grid"><select id="paymentInvoice"></select><input id="paymentAmount" type="number" min="0" step="0.01" placeholder="Amount received (K)"><select id="paymentReceiveMethod"><option>Cash</option><option>Mobile Money</option><option>Bank</option><option>Card</option><option>Other</option></select><input id="paymentReference" placeholder="Reference (optional)"></div><button class="primary" onclick="recordPayment()">Record Payment</button></div>
+<div class="card"><h3>Outstanding Balances</h3><div id="paymentTable"></div></div>
+</section>
+
+<section id="settings" class="hidden">
+<div class="card"><h2>System Settings</h2><div class="grid"><input id="finalBusinessName" value="Monobros Tradings" placeholder="Business name"><input id="finalBusinessPhone" placeholder="Business phone"><input id="finalBusinessAddress" placeholder="Business address"><input id="finalBusinessTpin" placeholder="Business TPIN (optional)"></div><button class="primary" onclick="saveFinalSettings()">Save Business Settings</button></div>
+<div class="card"><h3>Cloud & Security</h3><p class="muted">Your browser uses only the Supabase Publishable key. Never put a service-role/secret key or ZRA secret in this app.</p><div class="final-status"><span id="finalRoleStatus">Role: checking…</span><span>Cloud: Supabase</span><span>ZRA: Not connected</span></div><button class="primary" onclick="cloudSyncNow()">Sync Cloud Now</button></div>
+<div class="card"><h3>Backup & Restore</h3><p class="muted">Keep a backup before changing devices. Cloud synchronization is not a substitute for a business backup.</p><button class="primary" onclick="finalExportBackup()">Download Backup</button> <button onclick="document.getElementById('finalBackupFile').click()" style="padding:11px 14px;border-radius:10px;border:1px solid #ccd2d8;background:#fff">Restore Backup</button><input id="finalBackupFile" type="file" accept="application/json" style="display:none" onchange="finalImportBackup(this)"></div>
+<div class="warning"><b>ZRA status:</b> The system is prepared for ZRA Smart Invoice integration, but no live ZRA submission is claimed here. The approved ZRA/VSDC process and server-side credentials are still required.</div>
+</section>
+
+<section id="reports" class="hidden"><div class="card"><h2>Management Reports</h2><div class="grid"><div><div class="muted">Total Sales</div><div class="stat" id="reportSales">K0.00</div></div><div><div class="muted">Expenses</div><div class="stat" id="reportExpenses">K0.00</div></div><div><div class="muted">Outstanding Credit</div><div class="stat" id="reportCredit">K0.00</div></div><div><div class="muted">Stock Cost Value</div><div class="stat" id="reportStock">K0.00</div></div></div><p id="reportProfit" class="total"></p></div><div class="card"><h3>System Roadmap</h3><ol><li>Mobile-first sales and invoicing</li><li>Stock purchases and expenses</li><li>Customer credit and payment tracking</li><li>Cloud backup and multi-device sync</li><li>Approved ZRA Smart Invoice / certified invoicing integration</li></ol><p class="muted">ZRA submission is not claimed as active until the approved integration and certification are completed.</p></div></section>
+
+<section id="stage2" class="section">
+  <div class="card">
+    <span class="stage2-badge">STAGE 2</span>
+    <h2>Monobros Operations Centre</h2>
+    <p class="muted">Supplier of Power Plus+ Products</p>
+
+    <div class="kpi-grid" id="stage2Kpis"></div>
+
+    <div id="stage2Alerts"></div>
+
+    <h3>Quick Operations</h3>
+    <div class="quick-grid">
+      <button onclick="stage2Go('newSale')">New Sale</button>
+      <button onclick="stage2Go('purchases')">Receive Stock</button>
+      <button onclick="stage2Go('expenses')">Add Expense</button>
+      <button onclick="stage2Go('customers')">Customers</button>
+      <button onclick="stage2Go('products')">Stock</button>
+      <button onclick="stage2Go('invoices')">Invoices</button>
+      <button onclick="stage2Go('reports')">Reports</button>
+    </div>
+
+    <h3 style="margin-top:18px">Business Control Settings</h3>
+    <div class="grid">
+      <input id="businessNameStage2" value="Monobros Tradings" placeholder="Business name">
+      <input id="businessContactStage2" placeholder="Business phone">
+      <input id="businessAddressStage2" placeholder="Business address">
+      <button class="primary" onclick="saveStage2Settings()">Save Business Details</button>
+    </div>
+    <p class="mobile-only-note">These settings are stored on this device in Stage 2. Cloud synchronization is the next infrastructure step.</p>
+  </div>
+</section>
+
+<section id="stage3" class="section">
+  <div class="card">
+    <span class="stage2-badge">STAGE 3 — CLOUD READY</span>
+    <h2>Secure Business Control Centre</h2>
+    <div class="stage3-banner">
+      <strong>Monobros Tradings</strong> — Supplier of Power Plus+ Products
+      <p class="small">Stage 3 prepares the system for secure cloud storage, user accounts, automatic backup and phone/computer synchronization.</p>
+      <p class="small"><span class="sync-dot offline" id="stage3SyncDot"></span><strong id="stage3SyncText">Local device mode</strong></p>
+    </div>
+
+    <div class="stage3-grid">
+      <div class="stage3-card">
+        <h4>Business Owner</h4>
+        <span class="role-pill">ADMIN</span>
+        <p class="small">Full access to sales, stock, purchases, expenses, customers, reports and system settings.</p>
+      </div>
+      <div class="stage3-card">
+        <h4>Sales Operator</h4>
+        <span class="role-pill">SALES</span>
+        <p class="small">Create sales and invoices. Access to sensitive settings can be restricted.</p>
+      </div>
+      <div class="stage3-card">
+        <h4>Stock Operator</h4>
+        <span class="role-pill">STOCK</span>
+        <p class="small">Receive stock, update quantities and view product inventory.</p>
+      </div>
+      <div class="stage3-card">
+        <h4>Accounts</h4>
+        <span class="role-pill">ACCOUNTS</span>
+        <p class="small">Expenses, payments, customer balances and management reports.</p>
+      </div>
+    </div>
+
+    <h3>Device & Backup</h3>
+    <div class="stage3-grid">
+      <button onclick="stage3ExportBackup()">Export Business Backup</button>
+      <button onclick="stage3ImportBackup()">Restore Backup</button>
+      <button onclick="stage3CheckSync()">Check Sync Status</button>
+      <button onclick="stage3ClearLocalNotice()">Clear Local Notice</button>
+    </div>
+    <p class="small">The backup buttons protect the current browser data. True automatic cloud synchronization requires connecting this front end to a secure backend/database.</p>
+
+    <h3>Stage 3 Data Structure</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Module</th><th>Cloud record</th><th>Purpose</th></tr>
+        <tr><td>Products</td><td>products</td><td>Prices, costs, stock and product details</td></tr>
+        <tr><td>Customers</td><td>customers</td><td>Customer accounts and balances</td></tr>
+        <tr><td>Suppliers</td><td>suppliers</td><td>Supplier records and purchases</td></tr>
+        <tr><td>Invoices</td><td>invoices</td><td>Sales invoices and payment status</td></tr>
+        <tr><td>Invoice Items</td><td>invoice_items</td><td>Products and quantities on each invoice</td></tr>
+        <tr><td>Purchases</td><td>purchases</td><td>Stock received and purchase costs</td></tr>
+        <tr><td>Expenses</td><td>expenses</td><td>Operating costs</td></tr>
+        <tr><td>Users</td><td>users / auth</td><td>Login and staff permissions</td></tr>
+        <tr><td>Audit Log</td><td>audit_log</td><td>Who changed what and when</td></tr>
+        <tr><td>ZRA</td><td>zra_submissions</td><td>Submission references/status after approved integration</td></tr>
+      </table>
+    </div>
+
+    <h3>Security Rules</h3>
+    <ul class="small">
+      <li>Each staff member should have an individual account.</li>
+      <li>Sales staff should not be able to change business settings or erase financial records.</li>
+      <li>Important financial actions should create an audit record.</li>
+      <li>Cloud backups should be automatic rather than depending on one phone.</li>
+      <li>ZRA credentials/API secrets must never be stored in the browser interface.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="stage4" class="section">
+  <div class="card">
+    <span class="stage2-badge">STAGE 4 — SECURE OPERATING LAYER</span>
+    <h2>Monobros Cloud Operations</h2>
+
+    <div class="stage4-banner">
+      <strong>Goal:</strong> one business account with one live database, usable from the phone and computer.
+      <p class="small">The current HTML file remains a safe offline prototype. Stage 4 defines the secure production architecture rather than pretending that a cloud service is already connected.</p>
+    </div>
+
+    <div class="stage4-grid">
+      <div class="stage4-card">
+        <h4>Authentication</h4>
+        <p class="small">Email/phone login, secure sessions, password recovery and account activation.</p>
+      </div>
+      <div class="stage4-card">
+        <h4>Database</h4>
+        <p class="small">Central products, customers, suppliers, invoices, payments, stock and expenses.</p>
+      </div>
+      <div class="stage4-card">
+        <h4>Synchronization</h4>
+        <p class="small">Changes made on one device become available on the user's other devices.</p>
+      </div>
+      <div class="stage4-card">
+        <h4>Audit Trail</h4>
+        <p class="small">Record important financial actions, user, time and affected record.</p>
+      </div>
+    </div>
+
+    <h3>Production Login Model</h3>
+    <div class="login-preview">
+      <input placeholder="Email or phone" style="width:100%;margin-bottom:8px">
+      <input placeholder="Password" type="password" style="width:100%;margin-bottom:8px">
+      <button class="primary" style="width:100%" onclick="stage4DemoLogin()">Sign in</button>
+      <p class="small">Demo only — this button does not transmit or store a real password.</p>
+    </div>
+
+    <h3>Access Control</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Role</th><th>Sales</th><th>Stock</th><th>Expenses</th><th>Reports</th><th>Settings</th></tr>
+        <tr><td>Admin / Owner</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td></tr>
+        <tr><td>Sales</td><td>Full</td><td>View</td><td>No</td><td>Limited</td><td>No</td></tr>
+        <tr><td>Stock</td><td>View</td><td>Full</td><td>No</td><td>Limited</td><td>No</td></tr>
+        <tr><td>Accounts</td><td>View</td><td>View</td><td>Full</td><td>Full</td><td>Limited</td></tr>
+      </table>
+    </div>
+
+    <h3>Production Database</h3>
+    <div class="stage4-ok">
+      <strong>Recommended structure:</strong> a managed PostgreSQL database with authentication and row-level access controls.
+      The application should never expose database administrator credentials in the browser.
+    </div>
+
+    <div class="stage4-code">
+users / profiles<br>
+products / product_prices / stock_movements<br>
+customers / customer_balances<br>
+suppliers / supplier_balances<br>
+invoices / invoice_items / payments<br>
+purchases / purchase_items<br>
+expenses<br>
+audit_log<br>
+zra_submissions
+    </div>
+
+    <h3>Synchronization Rules</h3>
+    <ul class="small">
+      <li>Every important record gets a unique ID.</li>
+      <li>Every record stores created_at and updated_at timestamps.</li>
+      <li>Stock changes are recorded as movements, not simply overwritten.</li>
+      <li>Invoices should not be silently deleted after posting.</li>
+      <li>Financial corrections should use controlled adjustments with an audit trail.</li>
+      <li>Offline phone activity should queue safely and synchronize when connectivity returns.</li>
+    </ul>
+
+    <h3>ZRA Preparation</h3>
+    <div class="stage4-warn">
+      <strong>Important:</strong> ZRA submission is kept behind a server-side integration layer. Credentials and API secrets should not be placed in the mobile/browser code. Final integration must follow the current approved ZRA Smart Invoice/CIS requirements.
+    </div>
+
+    <h3>Deployment Checklist</h3>
+    <ol class="small">
+      <li>Create production cloud project and database.</li>
+      <li>Create authentication and staff roles.</li>
+      <li>Migrate Stage 3 records into the central database.</li>
+      <li>Connect the mobile web interface to the secure API/database.</li>
+      <li>Enable automatic backups and audit logging.</li>
+      <li>Test multi-device synchronization.</li>
+      <li>Run invoice, stock, payment and credit tests.</li>
+      <li>Then implement the approved ZRA integration.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="stage5" class="section">
+  <div class="card">
+    <span class="stage2-badge">STAGE 5 — DEPLOYMENT</span>
+    <h2>Online Business System</h2>
+
+    <div class="stage5-banner">
+      <strong>Monobros Tradings — Supplier of Power Plus+ Products</strong>
+      <p class="small">This stage adds the deployment control layer. The browser will use a secure backend when configured. Database passwords and private server credentials must never be placed in this page.</p>
+      <p><span class="sync-dot offline" id="stage5Dot"></span><span class="stage5-status" id="stage5Status">Backend not configured</span></p>
+    </div>
+
+    <div class="stage5-grid">
+      <div class="stage5-card">
+        <h4>1. Web Application</h4>
+        <p class="small">Mobile-first interface that can be installed on an Android home screen as a PWA.</p>
+      </div>
+      <div class="stage5-card">
+        <h4>2. Authentication</h4>
+        <p class="small">Real user accounts, sessions, password recovery and role permissions.</p>
+      </div>
+      <div class="stage5-card">
+        <h4>3. Database</h4>
+        <p class="small">Central PostgreSQL-style database for the entire business.</p>
+      </div>
+      <div class="stage5-card">
+        <h4>4. Server/API</h4>
+        <p class="small">Secure server layer for business rules and future ZRA submission.</p>
+      </div>
+    </div>
+
+    <h3>Backend Configuration</h3>
+    <p class="small">For security, this demo accepts only the public project URL and public client key. Never enter a database password, service-role key or ZRA secret here.</p>
+    <input id="stage5BackendUrl" class="stage5-input" placeholder="Backend project URL">
+    <input id="stage5PublicKey" class="stage5-input" placeholder="Public client / anonymous key">
+    <div class="stage5-grid">
+      <button class="primary" onclick="stage5SaveConfig()">Save Public Configuration</button>
+      <button onclick="stage5TestConfig()">Test Configuration</button>
+      <button onclick="stage5RemoveConfig()">Remove Configuration</button>
+    </div>
+
+    <h3>Migration</h3>
+    <div class="stage5-grid">
+      <button onclick="stage5ExportMigration()">Export Local Business Data</button>
+      <button onclick="stage5ShowMigration()">Show Migration Summary</button>
+    </div>
+    <div id="stage5MigrationSummary" class="small"></div>
+
+    <h3>Production Data Flow</h3>
+    <div class="stage5-code">Android phone / computer
+        ↓
+Secure login
+        ↓
+Monobros web application
+        ↓
+Secure API / database
+        ↓
+Products • Customers • Suppliers
+Invoices • Payments • Stock • Expenses
+        ↓
+Reports & audit trail
+        ↓
+Approved ZRA integration layer</div>
+
+    <h3>Deployment Checklist</h3>
+    <ol class="small">
+      <li>Create the production backend project.</li>
+      <li>Create authentication and staff accounts.</li>
+      <li>Create database tables and security policies.</li>
+      <li>Import the existing Power Plus+ product catalogue and business records.</li>
+      <li>Connect the application using only public client configuration.</li>
+      <li>Test sales, stock, credit, purchases, expenses and reports on two devices.</li>
+      <li>Configure automated backups.</li>
+      <li>Complete the required ZRA Smart Invoice/CIS integration and testing separately.</li>
+    </ol>
+
+    <div class="stage5-banner">
+      <strong>Important:</strong> Stage 5 does not claim that a live cloud account or ZRA connection exists yet. Those require actual service credentials and secure configuration.
+    </div>
+  </div>
+</section>
+
+<section id="stage6" class="section">
+  <div class="card">
+    <span class="stage2-badge">STAGE 6 — PRODUCTION DATA FOUNDATION</span>
+    <h2>Cloud Database & Migration Centre</h2>
+
+    <div class="stage6-banner">
+      <strong>Monobros Tradings</strong> — Supplier of Power Plus+ Products
+      <p class="small">Stage 6 defines the production database and the controlled migration path from the prototype into the live system.</p>
+    </div>
+
+    <div class="stage6-grid">
+      <div class="stage6-card">
+        <h4>Business</h4>
+        <p class="small">One organization record for Monobros Tradings.</p>
+      </div>
+      <div class="stage6-card">
+        <h4>Users</h4>
+        <p class="small">Owner and staff accounts with role-based access.</p>
+      </div>
+      <div class="stage6-card">
+        <h4>Inventory</h4>
+        <p class="small">Products, prices, costs and stock movements.</p>
+      </div>
+      <div class="stage6-card">
+        <h4>Finance</h4>
+        <p class="small">Invoices, payments, purchases and expenses.</p>
+      </div>
+    </div>
+
+    <h3>Production Setup Sequence</h3>
+    <div class="stage6-step"><span class="stage6-num">1</span><div><strong>Create the cloud project.</strong><div class="small">Create the managed database/authentication project and keep private service credentials server-side.</div></div></div>
+    <div class="stage6-step"><span class="stage6-num">2</span><div><strong>Run the database schema.</strong><div class="small">Create the organization, users, products, customers, suppliers, invoices, stock, payments, expenses and audit tables.</div></div></div>
+    <div class="stage6-step"><span class="stage6-num">3</span><div><strong>Create the owner account.</strong><div class="small">The business owner becomes the first administrator and can add staff later.</div></div></div>
+    <div class="stage6-step"><span class="stage6-num">4</span><div><strong>Migrate the catalogue.</strong><div class="small">Import Power Plus+ products, prices and available stock.</div></div></div>
+    <div class="stage6-step"><span class="stage6-num">5</span><div><strong>Connect the application.</strong><div class="small">Use only the public client configuration in the browser; enforce permissions in the backend.</div></div></div>
+    <div class="stage6-step"><span class="stage6-num">6</span><div><strong>Test before live use.</strong><div class="small">Test invoices, stock deduction, credit sales, purchases, expenses, reports and audit records.</div></div></div>
+
+    <h3>Current Prototype Data</h3>
+    <div id="stage6DataSummary" class="small"></div>
+
+    <div class="stage6-grid">
+      <button class="primary" onclick="stage6ExportMigration()">Export Migration Package</button>
+      <button onclick="stage6DownloadSchema()">Download Database Schema</button>
+      <button onclick="stage6ValidateLocalData()">Validate Local Data</button>
+    </div>
+
+    <h3>Administrator Setup</h3>
+    <div class="stage6-banner">
+      <strong>Owner account:</strong> The production system should create the first administrator through the backend authentication provider. Do not put the owner's password into this HTML file.
+      <div class="small">Recommended role: ADMIN / OWNER</div>
+    </div>
+
+    <h3>Database Tables</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Area</th><th>Tables</th></tr>
+        <tr><td>Organization</td><td>organizations, profiles</td></tr>
+        <tr><td>Products</td><td>products, product_prices, stock_movements</td></tr>
+        <tr><td>Customers</td><td>customers, customer_balances</td></tr>
+        <tr><td>Suppliers</td><td>suppliers, supplier_balances</td></tr>
+        <tr><td>Sales</td><td>invoices, invoice_items, payments</td></tr>
+        <tr><td>Purchases</td><td>purchases, purchase_items</td></tr>
+        <tr><td>Expenses</td><td>expenses</td></tr>
+        <tr><td>Security</td><td>audit_log</td></tr>
+        <tr><td>ZRA</td><td>zra_submissions</td></tr>
+      </table>
+    </div>
+
+    <h3>Important</h3>
+    <p class="small">The schema and migration package are prepared, but this chat does not have a live database account or your private backend credentials. Therefore Stage 6 does not falsely claim that cloud synchronization is already active.</p>
+  </div>
+</section>
+</main>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./service-worker.js").catch(function () {});
+  });
+}
+</script>
+
+<div class="card" style="margin:16px">
+  <span class="stage2-badge">FINAL APP</span>
+  <h3>Install Monobros on your phone</h3>
+  <p class="small">Once this app is hosted on a secure HTTPS website, open it in Android Chrome and choose <strong>Add to Home screen</strong> or <strong>Install app</strong>. It will then open like an app.</p>
+  <p class="small"><strong>Offline:</strong> the app shell can open without internet. Live cloud data synchronization requires the configured backend connection.</p>
+</div>
+
+<script>
+
+/* ===== CORE SALES / STOCK / INVOICE ENGINE ===== */
+let products=JSON.parse(localStorage.ppProducts||"null")||seedProducts.map((x,i)=>({id:i+1,name:x[0],size:x[1],price:x[2],cost:0,stock:x[3]}));
+let customers=JSON.parse(localStorage.ppCustomers||"null")||[];
+let invoices=JSON.parse(localStorage.ppInvoices||"null")||[];
+let purchases=JSON.parse(localStorage.ppPurchases||"[]");
+let expenses=JSON.parse(localStorage.ppExpenses||"[]");
+let lines=[];
+function save(){localStorage.ppProducts=JSON.stringify(products);localStorage.ppCustomers=JSON.stringify(customers);localStorage.ppInvoices=JSON.stringify(invoices);localStorage.ppPurchases=JSON.stringify(purchases);localStorage.ppExpenses=JSON.stringify(expenses);render()}
+function money(n){return "K"+Number(n||0).toFixed(2)}
+function esc(v){return String(v??"").replace(/[&<>\"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;"}[m]))}
+function show(id){document.querySelectorAll("main>section").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");render()}
+function render(){
+ document.getElementById("prodCount").textContent=products.length;document.getElementById("invCount").textContent=invoices.length;document.getElementById("lowStock").textContent=products.filter(p=>p.stock<10).length;
+ let today=new Date().toISOString().slice(0,10);document.getElementById("today").textContent=money(invoices.filter(i=>i.date.slice(0,10)==today).reduce((a,i)=>a+i.total,0));
+ document.getElementById("productTable").innerHTML=products.map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(p.size)}</td><td>${money(p.price)}</td><td>${p.stock}</td></tr>`).join("");
+ document.getElementById("customerTable").innerHTML=customers.map(c=>`<tr><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${esc(c.tpin||"")}</td></tr>`).join("");
+ document.getElementById("customer").innerHTML='<option value="">Walk-in customer</option>'+customers.map((c,i)=>`<option value="${i}">${esc(c.name)}</option>`).join("");
+ document.getElementById("invoiceTable").innerHTML=invoices.length?invoices.slice().reverse().map(i=>`<div class="card"><b>${i.no}</b> — ${esc(i.customer)}<br><span class="muted">${new Date(i.date).toLocaleString()} · ${esc(i.paymentStatus||"Paid")} · ${esc(i.paymentMethod||"Cash")}</span><div>${money(i.total)} <button class="primary" onclick="printInvoice('${i.no}')">Print</button></div></div>`).join(""):"No invoices yet.";
+ renderPurchases();renderExpenses();renderReports();refreshPurchaseProducts();
+}
+function addProduct(){let n=pn.value.trim(),s=ps.value.trim(),p=+pp.value,q=+pq.value;if(!n||!s||!p)return alert("Enter product, size and price.");products.push({id:Date.now(),name:n,size:s,price:p,cost:0,stock:q||0});pn.value=ps.value=pp.value=pq.value="";save()}
+function addCustomer(){let n=cn.value.trim();if(!n)return alert("Enter customer name.");customers.push({name:n,phone:cp.value.trim(),tpin:ct.value.trim(),address:ca.value.trim()});cn.value=cp.value=ct.value=ca.value="";save()}
+function addLine(){if(!products.length)return alert("Add a product first.");lines.push({pid:products[0].id,qty:1});renderLines()}
+function renderLines(){document.getElementById("lines").innerHTML=lines.map((l,i)=>{let p=products.find(x=>x.id==l.pid)||products[0];return `<div class="row"><select onchange="lines[${i}].pid=+this.value;renderLines()">${products.map(x=>`<option value="${x.id}" ${x.id==l.pid?"selected":""}>${esc(x.name)} ${esc(x.size)} — ${money(x.price)}</option>`).join("")}</select><input type="number" min="1" value="${l.qty}" onchange="lines[${i}].qty=+this.value;renderLines()"><span>${money(p.price*l.qty)}</span><button class="danger" onclick="lines.splice(${i},1);renderLines()">×</button></div>`}).join("");document.getElementById("saleTotal").textContent=money(lines.reduce((a,l)=>{let p=products.find(p=>p.id==l.pid);return a+(p?p.price*l.qty:0)},0))}
+function completeSale(){if(!lines.length)return alert("Add a product first.");for(const l of lines){let p=products.find(x=>x.id==l.pid);if(!p||l.qty>p.stock)return alert("Not enough stock for "+(p?.name||"product"))}let c=customer.value?customers[+customer.value]:null;let total=lines.reduce((a,l)=>a+products.find(p=>p.id==l.pid).price*l.qty,0);lines.forEach(l=>products.find(p=>p.id==l.pid).stock-=l.qty);let no="PP-"+String(invoices.length+1).padStart(5,"0");let inv={no,date:new Date().toISOString(),customer:c?c.name:"Walk-in customer",items:lines.map(l=>{let p=products.find(p=>p.id==l.pid);return {name:p.name,size:p.size,qty:l.qty,price:p.price,cost:p.cost||0}}),total,paymentStatus:paymentStatus.value,paymentMethod:paymentMethod.value};invoices.push(inv);lines=[];save();show("sale");document.getElementById("invoicePreview").innerHTML=invoiceHTML(inv)}
+function invoiceHTML(i){return `<div class="card" id="printArea"><h2>MONOBROS TRADINGS</h2><p><b>Supplier of Power Plus+ Products</b><br><b>INVOICE ${i.no}</b><br>${new Date(i.date).toLocaleString()}<br>Customer: ${esc(i.customer)}<br>Payment: ${esc(i.paymentStatus||"Paid")} — ${esc(i.paymentMethod||"Cash")}</p><table><tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr>${i.items.map(x=>`<tr><td>${esc(x.name)} ${esc(x.size)}</td><td>${x.qty}</td><td>${money(x.price)}</td><td>${money(x.price*x.qty)}</td></tr>`).join("")}</table><p class="total">TOTAL ${money(i.total)}</p><p class="muted">ZRA fiscal fields will be populated after approved Smart Invoice/VSDC integration.</p><button class="primary no-print" onclick="window.print()">Print / Save PDF</button></div>`}
+function printInvoice(no){let i=invoices.find(x=>x.no==no);document.getElementById("invoicePreview").innerHTML=invoiceHTML(i);show("sale");setTimeout(()=>window.print(),200)}
+function refreshPurchaseProducts(){let e=document.getElementById("purchaseProduct");if(e)e.innerHTML=products.map(p=>`<option value="${p.id}">${esc(p.name)} ${esc(p.size)}</option>`).join("")}
+function addPurchase(){let supplier=supplierName.value.trim(),pid=+purchaseProduct.value,qty=+purchaseQty.value,cost=+purchaseCost.value,p=products.find(x=>x.id==pid);if(!supplier||!p||qty<1||cost<0)return alert("Enter supplier, product, quantity and cost.");p.stock+=qty;p.cost=cost;purchases.push({date:new Date().toISOString(),supplier,product:p.name+" "+p.size,qty,cost,total:qty*cost});save();supplierName.value=purchaseQty.value=purchaseCost.value="";alert("Stock received successfully.")}
+function renderPurchases(){let e=document.getElementById("purchaseTable");if(!e)return;e.innerHTML=purchases.length?`<table><tr><th>Date</th><th>Supplier</th><th>Product</th><th>Qty</th><th>Total</th></tr>${purchases.slice().reverse().map(r=>`<tr><td>${new Date(r.date).toLocaleDateString()}</td><td>${esc(r.supplier)}</td><td>${esc(r.product)}</td><td>${r.qty}</td><td>${money(r.total)}</td></tr>`).join("")}</table>`:"No purchases recorded yet."}
+function addExpense(){let d=expenseDescription.value.trim(),cat=expenseCategory.value,a=+expenseAmount.value;if(!d||a<=0)return alert("Enter expense description and amount.");expenses.push({date:new Date().toISOString(),description:d,category:cat,amount:a});save();expenseDescription.value=expenseAmount.value=""}
+function renderExpenses(){let e=document.getElementById("expenseTable");if(!e)return;e.innerHTML=expenses.length?`<table><tr><th>Date</th><th>Description</th><th>Category</th><th>Amount</th></tr>${expenses.slice().reverse().map(r=>`<tr><td>${new Date(r.date).toLocaleDateString()}</td><td>${esc(r.description)}</td><td>${esc(r.category)}</td><td>${money(r.amount)}</td></tr>`).join("")}</table>`:"No expenses recorded yet."}
+function renderReports(){let sales=invoices.reduce((a,i)=>a+i.total,0),exp=expenses.reduce((a,e)=>a+e.amount,0),credit=invoices.filter(i=>i.paymentStatus==="Credit"||i.paymentStatus==="Part Paid").reduce((a,i)=>a+i.total,0),stock=products.reduce((a,p)=>a+(p.stock*(p.cost||0)),0);document.getElementById("reportSales").textContent=money(sales);document.getElementById("reportExpenses").textContent=money(exp);document.getElementById("reportCredit").textContent=money(credit);document.getElementById("reportStock").textContent=money(stock);document.getElementById("reportProfit").textContent="Sales less recorded expenses: "+money(sales-exp)}
+render();addLine();
+
+
+/* ===== MONOBROS FINAL OPERATIONAL FEATURES ===== */
+let suppliers=JSON.parse(localStorage.ppSuppliers||"[]");
+let payments=JSON.parse(localStorage.ppPayments||"[]");
+const FINAL_SETTINGS_KEY="monobros_final_settings_v1";
+function finalSettings(){try{return JSON.parse(localStorage.getItem(FINAL_SETTINGS_KEY)||"{}")}catch(e){return {}}}
+function finalSaveLocal(){localStorage.ppProducts=JSON.stringify(products);localStorage.ppCustomers=JSON.stringify(customers);localStorage.ppInvoices=JSON.stringify(invoices);localStorage.ppPurchases=JSON.stringify(purchases);localStorage.ppExpenses=JSON.stringify(expenses);localStorage.ppSuppliers=JSON.stringify(suppliers);localStorage.ppPayments=JSON.stringify(payments);render();finalRender();}
+function addSupplier(){const n=sn.value.trim();if(!n)return alert("Enter supplier name.");suppliers.push({id:Date.now(),name:n,phone:sp.value.trim(),address:sa.value.trim()});sn.value=sp.value=sa.value="";finalSaveLocal();}
+function renderSuppliers(){const e=document.getElementById("supplierTable");if(!e)return;e.innerHTML=suppliers.length?suppliers.map(x=>`<tr><td>${esc(x.name)}</td><td>${esc(x.phone||"")}</td><td>${esc(x.address||"")}</td></tr>`).join(""):"<tr><td colspan='3'>No suppliers recorded.</td></tr>";}
+function invoiceBalance(i){const paid=Number(i.amountPaid||0);return Math.max(0,Number(i.total||0)-paid);}
+function renderPayments(){const sel=document.getElementById("paymentInvoice");if(!sel)return;const open=invoices.filter(i=>invoiceBalance(i)>0);sel.innerHTML=open.length?open.map(i=>`<option value="${esc(i.no)}">${esc(i.no)} — ${esc(i.customer)} — balance ${money(invoiceBalance(i))}</option>`).join(""):"<option value=''>No outstanding invoices</option>";const e=document.getElementById("paymentTable");if(!e)return;e.innerHTML=open.length?`<table><tr><th>Invoice</th><th>Customer</th><th>Total</th><th>Paid</th><th>Balance</th></tr>${open.map(i=>`<tr><td>${esc(i.no)}</td><td>${esc(i.customer)}</td><td>${money(i.total)}</td><td>${money(i.amountPaid||0)}</td><td>${money(invoiceBalance(i))}</td></tr>`).join("")}</table>`:"No outstanding customer balances.";}
+function recordPayment(){const no=paymentInvoice.value;if(!no)return alert("There are no outstanding invoices.");const i=invoices.find(x=>x.no===no);const amount=Number(paymentAmount.value||0);if(!i||amount<=0)return alert("Enter a valid payment amount.");const bal=invoiceBalance(i);if(amount>bal)return alert("Payment is greater than the outstanding balance.");i.amountPaid=Number(i.amountPaid||0)+amount;i.paymentStatus=i.amountPaid>=Number(i.total||0)?"Paid":"Part Paid";payments.push({id:Date.now(),invoiceNo:no,customer:i.customer,amount,method:paymentReceiveMethod.value,reference:paymentReference.value.trim(),date:new Date().toISOString()});paymentAmount.value=paymentReference.value="";finalSaveLocal();cloudAudit("RECEIVE_PAYMENT","invoices",i.cloud_id||null,{invoice_no:no,amount});alert("Payment recorded successfully.");}
+function saveFinalSettings(){const data={name:finalBusinessName.value.trim()||"Monobros Tradings",phone:finalBusinessPhone.value.trim(),address:finalBusinessAddress.value.trim(),tpin:finalBusinessTpin.value.trim()};localStorage.setItem(FINAL_SETTINGS_KEY,JSON.stringify(data));alert("Business settings saved.");}
+function loadFinalSettings(){const x=finalSettings();finalBusinessName.value=x.name||"Monobros Tradings";finalBusinessPhone.value=x.phone||"";finalBusinessAddress.value=x.address||"";finalBusinessTpin.value=x.tpin||"";}
+function finalExportBackup(){const payload={version:2,exportedAt:new Date().toISOString(),products,customers,invoices,purchases,expenses,suppliers,payments,settings:finalSettings()};const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}));a.download="Monobros_Tradings_Backup_"+new Date().toISOString().slice(0,10)+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500);}
+function finalImportBackup(input){const f=input.files&&input.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!Array.isArray(x.products)||!Array.isArray(x.invoices))throw new Error("Invalid Monobros backup");products=x.products;customers=x.customers||[];invoices=x.invoices||[];purchases=x.purchases||[];expenses=x.expenses||[];suppliers=x.suppliers||[];payments=x.payments||[];localStorage.setItem(FINAL_SETTINGS_KEY,JSON.stringify(x.settings||{}));finalSaveLocal();loadFinalSettings();alert("Backup restored successfully.");}catch(e){alert("Backup restore failed: "+e.message)}};r.readAsText(f);input.value="";}
+function finalRender(){renderSuppliers();renderPayments();const k=document.getElementById("finalRoleStatus");if(k)k.textContent="Role: "+(window.cloudProfile?.role||"Local / Login required");}
+const oldSaveFinal=window.save;if(typeof oldSaveFinal==="function"){window.save=function(){oldSaveFinal.apply(this,arguments);setTimeout(finalRender,0);};}
+const oldCompleteSaleFinal=window.completeSale;window.completeSale=function(){const before=invoices.length;oldCompleteSaleFinal.apply(this,arguments);if(invoices.length>before){const i=invoices[invoices.length-1];i.amountPaid=i.paymentStatus==="Paid"?i.total:0;if(i.paymentStatus==="Part Paid")i.amountPaid=0;localStorage.ppInvoices=JSON.stringify(invoices);finalRender();}};
+const oldRenderFinal=window.render;window.render=function(){oldRenderFinal.apply(this,arguments);finalRender();};
+loadFinalSettings();setTimeout(finalRender,50);
+
+/* ===== MONOBROS LIVE SUPABASE CLOUD LAYER ===== */
+const MONOBROS_CLOUD_URL = "https://ifppxjauapplmuyqfsal.supabase.co";
+const CLOUD_CONFIG_KEY = "monobros_live_supabase_config_v1";
+let cloudClient = null;
+let cloudSession = null;
+let cloudOrgId = null;
+let cloudProfile = null;
+let cloudBusy = false;
+
+function cloudConfig(){
+  try { return JSON.parse(localStorage.getItem(CLOUD_CONFIG_KEY) || "null"); } catch(e){ return null; }
+}
+function cloudSetMessage(msg, good=false){
+  const el=document.getElementById("cloudMessage");
+  if(el){ el.textContent=msg; el.style.color=good ? "#16803a" : "#9a3412"; }
+}
+function cloudSetStatus(text, good=false){
+  const bar=document.getElementById("cloudBar"), dot=document.getElementById("cloudStatusDot"), st=document.getElementById("cloudStatusText");
+  if(bar) bar.style.display="block";
+  if(dot) dot.style.color=good ? "#3ddc84" : "#f5b642";
+  if(st) st.textContent=text;
+}
+function cloudHideGate(){ const g=document.getElementById("cloudGate"); if(g) g.style.display="none"; }
+function cloudShowGate(){ const g=document.getElementById("cloudGate"); if(g) g.style.display="block"; }
+function saveCloudConfig(){
+  const url=(document.getElementById("cloudUrl")?.value || MONOBROS_CLOUD_URL).trim().replace(/\/rest\/v1\/?$/,"");
+  const key=(document.getElementById("cloudKey")?.value || "").trim();
+  if(!url || !key){ cloudSetMessage("Enter the Project URL and the Publishable key."); return; }
+  if(!/^https:\/\/.+\.supabase\.co$/i.test(url) && !/^https:\/\/.+$/i.test(url)){ cloudSetMessage("Use the Supabase Project URL beginning with https://"); return; }
+  localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify({url, key}));
+  cloudSetMessage("Cloud configuration saved on this device. Testing connection...", true);
+  cloudInit(true);
+}
+async function cloudInit(showGateIfNeeded=false){
+  const cfg=cloudConfig();
+  const urlInput=document.getElementById("cloudUrl");
+  if(urlInput && !urlInput.value) urlInput.value=MONOBROS_CLOUD_URL;
+  if(!cfg){
+    cloudSetStatus("Cloud not configured", false);
+    if(showGateIfNeeded) cloudShowGate();
+    return false;
+  }
+  try{
+    cloudClient = window.supabase.createClient(cfg.url.replace(/\/$/,""), cfg.key);
+    const {data,error}=await cloudClient.auth.getSession();
+    if(error) throw error;
+    cloudSession=data.session;
+    if(!cloudSession){
+      cloudSetStatus("Cloud ready — login required", false);
+      cloudShowGate();
+      return false;
+    }
+    await cloudLoadProfile();
+    cloudHideGate();
+    cloudSetStatus("Cloud connected", true);
+    return true;
+  }catch(e){
+    cloudSetStatus("Cloud connection error", false);
+    if(showGateIfNeeded) cloudSetMessage("Connection failed: " + (e.message || e));
+    cloudShowGate();
+    return false;
+  }
+}
+async function cloudCheck(){
+  const cfg=cloudConfig();
+  if(!cfg){ cloudSetMessage("Save the Project URL and Publishable key first."); return; }
+  try{
+    const c=window.supabase.createClient(cfg.url.replace(/\/$/,""), cfg.key);
+    const {data,error}=await c.auth.getSession();
+    if(error) throw error;
+    cloudSetMessage("Supabase responded successfully. " + (data.session ? "A login session is active." : "Now enter your admin login."), true);
+  }catch(e){ cloudSetMessage("Connection failed: " + (e.message || e)); }
+}
+async function cloudLogin(){
+  const cfg=cloudConfig();
+  if(!cfg){ cloudSetMessage("Save your Project URL and Publishable key first."); return; }
+  const email=(document.getElementById("loginEmail")?.value || "").trim();
+  const password=document.getElementById("loginPassword")?.value || "";
+  if(!email || !password){ cloudSetMessage("Enter your admin email and password."); return; }
+  try{
+    cloudSetMessage("Signing in...");
+    cloudClient=window.supabase.createClient(cfg.url.replace(/\/$/,""), cfg.key);
+    const {data,error}=await cloudClient.auth.signInWithPassword({email,password});
+    if(error) throw error;
+    cloudSession=data.session;
+    await cloudLoadProfile();
+    cloudHideGate();
+    cloudSetStatus("Cloud connected", true);
+    await cloudSyncNow(true);
+  }catch(e){ cloudSetMessage("Login failed: " + (e.message || e)); }
+}
+async function cloudLogout(){
+  try{ if(cloudClient) await cloudClient.auth.signOut(); }catch(e){}
+  cloudSession=null; cloudOrgId=null; cloudProfile=null;
+  cloudSetStatus("Logged out", false);
+  cloudShowGate();
+}
+async function cloudLoadProfile(){
+  if(!cloudClient || !cloudSession) throw new Error("No authenticated session.");
+  const {data,error}=await cloudClient.from("profiles").select("id,organization_id,full_name,role,active").eq("id",cloudSession.user.id).single();
+  if(error) throw new Error("Profile not available. Make sure your Monobros ADMIN profile exists and the RLS policies have been installed.");
+  if(!data.active) throw new Error("This account is inactive.");
+  cloudProfile=data; cloudOrgId=data.organization_id;
+  cloudSetStatus("Cloud connected — " + data.role, true);
+}
+async function cloudSyncNow(silent=false){
+  if(cloudBusy) return;
+  if(!cloudClient || !cloudSession || !cloudOrgId){
+    if(!silent) alert("Log in to the cloud first.");
+    return;
+  }
+  cloudBusy=true; cloudSetStatus("Synchronizing...", true);
+  try{
+    await cloudPushLocal();
+    await cloudPullToLocal();
+    if(typeof render==="function") render();
+    cloudSetStatus("Cloud synchronized", true);
+    if(!silent) alert("Monobros data synchronized successfully.");
+  }catch(e){
+    console.error(e);
+    cloudSetStatus("Sync error", false);
+    if(!silent) alert("Cloud sync error: " + (e.message || e));
+  }finally{ cloudBusy=false; }
+}
+function localProducts(){ try{return JSON.parse(localStorage.ppProducts||"[]")}catch(e){return []} }
+function localCustomers(){ try{return JSON.parse(localStorage.ppCustomers||"[]")}catch(e){return []} }
+function localInvoices(){ try{return JSON.parse(localStorage.ppInvoices||"[]")}catch(e){return []} }
+function localPurchases(){ try{return JSON.parse(localStorage.ppPurchases||"[]")}catch(e){return []} }
+function localExpenses(){ try{return JSON.parse(localStorage.ppExpenses||"[]")}catch(e){return []} }
+
+async function ensureCloudCustomer(c){
+  if(c.cloud_id) return c.cloud_id;
+  let q=cloudClient.from("customers").select("id").eq("organization_id",cloudOrgId).eq("name",c.name).limit(1);
+  if(c.phone) q=q.eq("phone",c.phone);
+  const {data,error}=await q;
+  if(error) throw error;
+  if(data && data[0]){ c.cloud_id=data[0].id; return c.cloud_id; }
+  const {data:ins,error:ie}=await cloudClient.from("customers").insert({
+    organization_id:cloudOrgId,name:c.name,phone:c.phone||null,address:c.address||null,opening_balance:0
+  }).select("id").single();
+  if(ie) throw ie;
+  c.cloud_id=ins.id; return ins.id;
+}
+async function ensureCloudProduct(p){
+  if(p.cloud_id) return p.cloud_id;
+  const {data,error}=await cloudClient.from("products").select("id").eq("organization_id",cloudOrgId).eq("name",p.name).eq("unit",p.size||"unit").limit(1);
+  if(error) throw error;
+  if(data && data[0]){ p.cloud_id=data[0].id; return p.cloud_id; }
+  const {data:ins,error:ie}=await cloudClient.from("products").insert({
+    organization_id:cloudOrgId,name:p.name,unit:p.size||"unit",sale_price:Number(p.price||0),cost_price:Number(p.cost||0),stock:Number(p.stock||0),reorder_level:5,active:true
+  }).select("id").single();
+  if(ie) throw ie;
+  p.cloud_id=ins.id; return ins.id;
+}
+async function cloudPushLocal(){
+  const ps=localProducts();
+  for(const p of ps){
+    const id=await ensureCloudProduct(p);
+    const {error}=await cloudClient.from("products").update({
+      name:p.name,unit:p.size||"unit",sale_price:Number(p.price||0),cost_price:Number(p.cost||0),stock:Number(p.stock||0),active:true,updated_at:new Date().toISOString()
+    }).eq("id",id).eq("organization_id",cloudOrgId);
+    if(error) throw error;
+  }
+  localStorage.ppProducts=JSON.stringify(ps);
+
+  const cs=localCustomers();
+  for(const c of cs) await ensureCloudCustomer(c);
+  localStorage.ppCustomers=JSON.stringify(cs);
+
+  const invs=localInvoices();
+  for(const inv of invs){
+    if(inv.cloud_id) continue;
+    let {data:existing,error:qe}=await cloudClient.from("invoices").select("id").eq("organization_id",cloudOrgId).eq("invoice_no",inv.no).limit(1);
+    if(qe) throw qe;
+    if(existing && existing[0]){ inv.cloud_id=existing[0].id; continue; }
+    const customer=cs.find(x=>x.name===inv.customer);
+    const customerId=customer ? await ensureCloudCustomer(customer) : null;
+    const amountPaid=inv.paymentStatus==="Paid" ? Number(inv.total||0) : inv.paymentStatus==="Part Paid" ? 0 : 0;
+    const {data:ins,error:ie}=await cloudClient.from("invoices").insert({
+      organization_id:cloudOrgId,invoice_no:inv.no,customer_id:customerId,status:"POSTED",
+      payment_status:inv.paymentStatus||"Paid",payment_method:inv.paymentMethod||"Cash",
+      subtotal:Number(inv.total||0),discount:0,total:Number(inv.total||0),amount_paid:amountPaid,
+      balance:Math.max(0,Number(inv.total||0)-amountPaid),created_by:cloudSession.user.id,created_at:inv.date||new Date().toISOString()
+    }).select("id").single();
+    if(ie) throw ie;
+    inv.cloud_id=ins.id;
+    const items=[];
+    for(const item of (inv.items||[])){
+      const p=ps.find(x=>x.name===item.name && (x.size||"unit")===(item.size||"unit"));
+      if(p){
+        const pid=await ensureCloudProduct(p);
+        items.push({invoice_id:ins.id,product_id:pid,quantity:Number(item.qty||0),unit_price:Number(item.price||0),line_total:Number(item.qty||0)*Number(item.price||0)});
+      }
+    }
+    if(items.length){
+      const {error:ii}=await cloudClient.from("invoice_items").insert(items);
+      if(ii) throw ii;
+    }
+  }
+  localStorage.ppInvoices=JSON.stringify(invs);
+
+  const exps=localExpenses();
+  for(const e of exps){
+    if(e.cloud_id) continue;
+    const {data:ins,error}=await cloudClient.from("expenses").insert({
+      organization_id:cloudOrgId,category:e.category||null,description:e.description,amount:Number(e.amount||0),created_by:cloudSession.user.id,created_at:e.date||new Date().toISOString()
+    }).select("id").single();
+    if(error) throw error;
+    e.cloud_id=ins.id;
+  }
+  localStorage.ppExpenses=JSON.stringify(exps);
+}
+async function cloudPullToLocal(){
+  const {data:ps,error:pe}=await cloudClient.from("products").select("*").eq("organization_id",cloudOrgId).eq("active",true).order("created_at");
+  if(pe) throw pe;
+  if(ps && ps.length){
+    const mapped=ps.map((p,i)=>({id:i+1,cloud_id:p.id,name:p.name,size:p.unit,price:Number(p.sale_price||0),cost:Number(p.cost_price||0),stock:Number(p.stock||0)}));
+    localStorage.ppProducts=JSON.stringify(mapped);
+  }
+  const {data:cs,error:ce}=await cloudClient.from("customers").select("*").eq("organization_id",cloudOrgId).order("created_at");
+  if(ce) throw ce;
+  if(cs){
+    localStorage.ppCustomers=JSON.stringify(cs.map((c,i)=>({id:i,name:c.name,phone:c.phone||"",tpin:"",address:c.address||"",cloud_id:c.id})));
+  }
+  const {data:invs,error:ie}=await cloudClient.from("invoices").select("*, invoice_items(*)").eq("organization_id",cloudOrgId).order("created_at",{ascending:false});
+  if(ie) throw ie;
+  if(invs){
+    const products=JSON.parse(localStorage.ppProducts||"[]");
+    const customers=JSON.parse(localStorage.ppCustomers||"[]");
+    const mapped=invs.map(i=>({
+      no:i.invoice_no,date:i.created_at,customer:(customers.find(c=>c.cloud_id===i.customer_id)||{}).name||"Walk-in customer",
+      items:(i.invoice_items||[]).map(it=>{const p=products.find(x=>x.cloud_id===it.product_id)||{};return {name:p.name||"Product",size:p.size||"",qty:Number(it.quantity||0),price:Number(it.unit_price||0),cost:Number(p.cost||0)}}),
+      total:Number(i.total||0),paymentStatus:i.payment_status||"Paid",paymentMethod:i.payment_method||"Cash",cloud_id:i.id
+    }));
+    localStorage.ppInvoices=JSON.stringify(mapped);
+  }
+  const {data:ex,error:ee}=await cloudClient.from("expenses").select("*").eq("organization_id",cloudOrgId).order("created_at",{ascending:false});
+  if(ee) throw ee;
+  if(ex) localStorage.ppExpenses=JSON.stringify(ex.map(e=>({date:e.created_at,description:e.description,category:e.category||"",amount:Number(e.amount||0),cloud_id:e.id})));
+}
+async function cloudAudit(action,tableName,recordId,details){
+  try{
+    if(!cloudClient||!cloudSession||!cloudOrgId)return;
+    await cloudClient.from("audit_log").insert({organization_id:cloudOrgId,user_id:cloudSession.user.id,action,table_name:tableName,record_id:recordId||null,details:details||{}});
+  }catch(e){console.warn("Audit log failed",e);}
+}
+
+document.addEventListener("DOMContentLoaded", async ()=>{
+  const cfg=cloudConfig();
+  const key=document.getElementById("cloudKey");
+  if(key && cfg?.key) key.value=cfg.key;
+  const url=document.getElementById("cloudUrl");
+  if(url) url.value=cfg?.url || MONOBROS_CLOUD_URL;
+  try{
+    const ready=await cloudInit(false);
+    if(!ready) cloudShowGate();
+  }catch(e){ cloudShowGate(); }
+});
+</script>
+
+
+<script>
+(function(){
+  const originalSave = window.save;
+  if(typeof originalSave === "function"){
+    window.save = function(){
+      originalSave.apply(this, arguments);
+      if(window.cloudSession && window.cloudClient && !window.cloudBusy){
+        window.cloudSyncNow(true);
+      }
+    };
+  }
+})();
+</script>
+
+</body></html>
